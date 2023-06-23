@@ -1,11 +1,13 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>宾馆后台管理</title>
-  <link rel="stylesheet" type="text/css" href="css/common.css"/>
-  <link rel="stylesheet" type="text/css" href="css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="css/common.css" />
+  <link rel="stylesheet" type="text/css" href="css/main.css" />
 </head>
+
 <body>
   <div class="topbar-wrap white">
     <div class="topbar-inner clearfix">
@@ -18,16 +20,16 @@
       <div class="top-info-wrap">
         <ul class="top-info-list clearfix">
           <li><i class="icon-font">&#xe607;</i> 登录用户：
-            <?php 
-            session_start(); 
-            if($_SESSION["aname"]){
-              echo $_SESSION["aname"]; 
-            }else{
+            <?php
+            session_start();
+            if ($_SESSION["aname"]) {
+              echo $_SESSION["aname"];
+            } else {
               header("location:index.php");
               exit;
-            } 
+            }
             ?>
-            </li>
+          </li>
           <li><a href="admin_logout.php"><i class="icon-font">&#xe638;</i> 退出</a></li>
         </ul>
       </div>
@@ -50,7 +52,7 @@
                 <th width="120">查询条件</th>
                 <td>
                   <select name="search-type" id="">
-                    <option value="roomid" selected >房间号</option>
+                    <option value="roomid" selected>房间号</option>
                     <option value="cardid">证件号</option>
                     <option value="linkman">姓名</option>
                     <option value="phone">联系电话</option>
@@ -58,7 +60,7 @@
                 </td>
                 <th width="70">关键字</th>
                 <td><input class="common-text" placeholder="请输入相应关键字" name="keywords" value="" id="" type="text"></td>
-                <td><input  name="sub" value="查询"  type="submit"></td>
+                <td><input name="sub" value="查询" type="submit"></td>
               </tr>
             </table>
           </form>
@@ -83,48 +85,63 @@
               <th class="tc">操&emsp;&emsp;作</th>
             </tr>
             <?php
-              require("../dbconnect.php");
-              
-              $sql = "select a.orderid,a.roomid,a.cardid,a.entertime,a.days,b.typeid,b.typename,a.linkman,a.phone,a.messages,a.monetary,a.ostatus,a.oremarks,b.price from orders a,roomtype b where a.typeid=b.typeid and a.".@$_POST["search-type"]." like ('%".@$_POST["keywords"]."%')";
-              $rs=mysqli_query($db_link,$sql);
-              if($rs){
-              $s=mysqli_num_rows($rs);
-              }else{
-                $s=0;
+            require("../dbconnect.php");
+
+            $searchType = @$_POST["search-type"];
+            $keywords = @$_POST["keywords"];
+
+            if (empty($searchType) || empty($keywords)) {
+              echo "无满足条件的记录，请继续查询！";
+              exit;
+            } else {
+              $sql = "SELECT a.orderid, a.roomid, a.cardid, a.entertime, a.days, b.typeid, b.typename, a.linkman, a.phone, a.messages, a.monetary, a.ostatus, a.oremarks, b.price 
+            FROM orders a, roomtype b 
+            WHERE a.typeid = b.typeid AND a.$searchType LIKE ('%$keywords%')";
+
+              $rs = mysqli_query($db_link, $sql);
+
+              if ($rs) {
+                $numRows = mysqli_num_rows($rs);
+              } else {
+                $numRows = 0;
               }
-              if(!$s)
-              {
-                  echo "无满足条件的记录，请继续查询！";
-                  exit;
-              }else{
-                while($rows=mysqli_fetch_assoc($rs))
-              {
-                ?>                            
-                <tr>
-                <td class='tc'><?php echo $rows["orderid"] ?></td>
-                <td class='tc'><?php echo $rows["roomid"] ?></td>
-                <td class='tc'><?php echo $rows["cardid"] ?></td>
-                <td class='tc'><?php echo $rows["entertime"] ?></td>
-                <td class='tc'><?php echo $rows["days"] ?></td>
-                <td class='tc'><?php echo $rows["typename"] ?></td>
-                <td class='tc'><?php echo $rows["linkman"] ?></td>
-                <td class='tc'><?php echo $rows["phone"] ?></td>
-                <td class='tc'><?php echo $rows["messages"] ?></td>
-                <td class='tc'><?php echo $rows["ostatus"] ?></td>
-                <td class='tc'><?php echo $rows["oremarks"] ?></td>
-                <td class='tc'><?php echo $rows["monetary"] ?></td>
-                <td class='tc'>
-                  <a href='admin_querymod.php?orderid=<?php echo $rows["orderid"] ?>'  class='link-update'>修改</a>
-                </td>                 
-                </tr>
-            <?php } ?>
-           <?php } ?>
+
+              if ($numRows === 0) {
+                echo "无满足条件的记录，请继续查询！";
+                exit;
+              } else {
+                while ($rows = mysqli_fetch_assoc($rs)) {
+            ?>
+                  <tr>
+                    <td class='tc'><?php echo $rows["orderid"] ?></td>
+                    <td class='tc'><?php echo $rows["roomid"] ?></td>
+                    <td class='tc'><?php echo $rows["cardid"] ?></td>
+                    <td class='tc'><?php echo $rows["entertime"] ?></td>
+                    <td class='tc'><?php echo $rows["days"] ?></td>
+                    <td class='tc'><?php echo $rows["typename"] ?></td>
+                    <td class='tc'><?php echo $rows["linkman"] ?></td>
+                    <td class='tc'><?php echo $rows["phone"] ?></td>
+                    <td class='tc'><?php echo $rows["messages"] ?></td>
+                    <td class='tc'><?php echo $rows["ostatus"] ?></td>
+                    <td class='tc'><?php echo $rows["oremarks"] ?></td>
+                    <td class='tc'><?php echo $rows["monetary"] ?></td>
+                    <td class='tc'>
+                      <a href='admin_querymod.php?orderid=<?php echo $rows["orderid"] ?>' class='link-update'>修改</a>
+                    </td>
+                  </tr>
+            <?php
+                }
+              }
+            }
+            ?>
+
           </table>
-          
+
         </div>
       </div>
     </div>
     <!--/main-->
   </div>
 </body>
+
 </html>
