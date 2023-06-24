@@ -33,9 +33,11 @@
 
 <div class="screenbg">
   <ul>
-    <li><a href="javascript:;"><img src="img/0.jpg"></a></li>
-    <li><a href="javascript:;"><img src="img/1.jpg"></a></li>
-    <li><a href="javascript:;"><img src="img/2.jpg"></a></li>
+
+    <li><a href="javascript:;"><img src="img/3.jpg"></a></li>
+    <li><a href="javascript:;"><img src="img/4.jpg"></a></li>
+    <li><a href="javascript:;"><img src="img/5.jpg"></a></li>
+
   </ul>
 </div>
 <script type="text/javascript">
