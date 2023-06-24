@@ -1,28 +1,15 @@
--- phpMyAdmin SQL Dump
--- version 4.0.4
--- http://www.phpmyadmin.net
---
--- 主机: localhost
--- 服务器版本: 5.0.96-community-nt
--- PHP 版本: 5.2.17
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
 --
 -- 数据库: `hotel`
 --
+DROP DATABASE IF EXISTS `hotel`;
 CREATE DATABASE IF NOT EXISTS `hotel` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `hotel`;
 
 -- --------------------------------------------------------
-
 --
 -- 表的结构 `admin`
 --
@@ -55,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `message` (
   `title` varchar(30) NOT NULL COMMENT '主题',
   `name` varchar(10) NOT NULL COMMENT '名字',
   `mailbox` varchar(50) NOT NULL COMMENT '邮箱',
-  `phone` int(20) NOT NULL COMMENT '手机',
+  `phone` char(11) NOT NULL COMMENT '手机',
   `content` varchar(240) NOT NULL COMMENT '留言内容',
   PRIMARY KEY  (`ms_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
@@ -65,10 +52,10 @@ CREATE TABLE IF NOT EXISTS `message` (
 --
 
 INSERT INTO `message` (`ms_id`, `title`, `name`, `mailbox`, `phone`, `content`) VALUES
-(12, '搜索', '搜索', '1251662462@qq.com', 2147483647, 'ss'),
-(13, '啊啊', '搜索', '1161942111@qq.com', 2147483647, 'ss'),
-(14, '森森', '森森', '1251662462@qq.com', 2147483647, '试试'),
-(15, '森森', '森森', '1251662462@qq.com', 2147483647, '试试');
+(12, '搜索', '小周', '1251662462@qq.com', 18627967261, 'ss'),
+(13, '啊啊', '小尹', '1161942111@qq.com', 18856365684, 'ss'),
+(14, '森森', '小刘', '1251662462@qq.com', 18856365684, '试试'),
+(15, '森森', '小王', '1251662462@qq.com', 18856365684, '试试');
 
 -- --------------------------------------------------------
 
@@ -111,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `days` int(3) NOT NULL default '1' COMMENT '住宿天数',
   `typeid` int(4) NOT NULL COMMENT '房间类型',
   `linkman` varchar(10) collate utf8_bin NOT NULL COMMENT '客户姓名',
-  `phone` varchar(11) collate utf8_bin NOT NULL COMMENT '联系电话',
+  `phone` char(11) collate utf8_bin NOT NULL COMMENT '联系电话',
   `ostatus` char(1) collate utf8_bin NOT NULL default '否' COMMENT '是否网上预订',
   `oremarks` char(1) collate utf8_bin NOT NULL default '否' COMMENT '订单是否完成',
   `monetary` decimal(8,2) NOT NULL COMMENT '消费金额',
@@ -143,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `record` (
   `days` int(3) NOT NULL default '1' COMMENT '住宿天数',
   `typeid` int(4) NOT NULL COMMENT '房间类型',
   `linkman` varchar(10) collate utf8_bin NOT NULL COMMENT '客户姓名',
-  `phone` varchar(11) collate utf8_bin NOT NULL COMMENT '联系电话',
+  `phone` char(11) collate utf8_bin NOT NULL COMMENT '联系电话',
   `ostatus` char(1) collate utf8_bin NOT NULL default '否' COMMENT '是否网上预订',
   `oremarks` char(1) collate utf8_bin NOT NULL default '否' COMMENT '订单是否完成',
   `monetary` decimal(8,2) NOT NULL COMMENT '消费金额',
@@ -232,6 +219,4 @@ ALTER TABLE `orders`
 ALTER TABLE `room`
   ADD CONSTRAINT `FK_ID` FOREIGN KEY (`typeid`) REFERENCES `roomtype` (`typeid`);
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
