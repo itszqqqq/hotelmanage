@@ -112,6 +112,20 @@
        echo "<script>alert('新增用户失败');history.go(-1);</script>";
      }
    }
+    //新增服务员
+   if($_POST["action"]=="inserts")
+   { 
+     $sql = "insert into server (servername,roomid) values('".$_POST["name"]."','".$_POST["roomid"]."')";
+     $arr=mysqli_query($db_link,$sql);
+     if ($arr)
+     {
+       echo "<script language=javascript>alert('新增服务员成功！');window.location='admin_adds.php'</script>";
+     }
+     else
+     {
+       echo "<script>alert('新增服务员失败');history.go(-1);</script>";
+     }
+   }
 
   
   

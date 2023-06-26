@@ -66,7 +66,7 @@
             <?php
             require("../dbconnect.php");
             $pagesize = 10;
-            $sql = "select a.orderid,a.roomid,a.cardid,a.entertime,a.days,b.typeid,b.typename,a.linkman,a.phone,a.messages,a.ostatus,a.oremarks,b.price,a.monetary from orders a, roomtype b where a.typeid=b.typeid and a.ostatus='是' and a.oremarks='否'";
+            $sql = "select * from order_query";
             $rs = mysqli_query($db_link, $sql);
             $recordcount = mysqli_num_rows($rs);
             if ($recordcount == 0) {
@@ -83,7 +83,7 @@
               $pageno = $pagecount;
             }
             $startno = ($pageno - 1) * $pagesize;
-            $sql = "select a.orderid,a.roomid,a.cardid,a.entertime,a.days,b.typeid,b.typename,a.linkman,a.phone,a.messages,a.ostatus,a.oremarks,b.price,a.monetary from orders a, roomtype b where a.typeid=b.typeid and a.ostatus='是' and a.oremarks='否' order by a.roomid asc limit $startno,$pagesize";
+            $sql = "select * from order_query order by a.roomid asc limit $startno,$pagesize";
 
             $rs = mysqli_query($db_link, $sql);
             if (!$rs) {

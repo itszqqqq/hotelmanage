@@ -109,4 +109,16 @@
     }
     
   }
+  if(@$_GET["serverid"])
+  {
+      $sql="delete from server where serverid='".$_GET["serverid"]."'";
+      $arry=mysqli_query($db_link,$sql);
+      if($arry)
+      {
+        echo "<script> alert('删除服务员成功');location='admin_adds.php';</script>";
+      }
+      else{
+        echo "删除服务员失败";
+      }
+    }
 ?>

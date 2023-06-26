@@ -94,9 +94,7 @@
               echo "无满足条件的记录，请继续查询！";
               exit;
             } else {
-              $sql = "SELECT a.orderid, a.roomid, a.cardid, a.entertime, a.days, b.typeid, b.typename, a.linkman, a.phone, a.messages, a.monetary, a.ostatus, a.oremarks, b.price 
-            FROM orders a, roomtype b 
-            WHERE a.typeid = b.typeid AND a.$searchType LIKE ('%$keywords%')";
+              $sql = "select * from order_admin_query where order_admin_query.$searchType LIKE ('%$keywords%')";
 
               $rs = mysqli_query($db_link, $sql);
 

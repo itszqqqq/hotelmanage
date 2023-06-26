@@ -118,7 +118,7 @@
             <?php
               require("../dbconnect.php");
               $pagesize = 10;
-              $sql = "select a.orderid,a.roomid,a.cardid,a.entertime,a.days,b.typeid,b.typename,a.linkman,a.phone,a.messages,a.monetary,a.ostatus,a.oremarks,b.price from record a,roomtype b where a.typeid=b.typeid ";
+              $sql = "select * from order_history_query";
               $rs=mysqli_query($db_link,$sql);
               if(!$rs)
               {
@@ -138,7 +138,7 @@
                   $pageno=$pagecount;
               }
               $startno=($pageno-1)*$pagesize;
-              $sql="select a.orderid,a.roomid,a.cardid,a.entertime,a.days,b.typeid,b.typename,a.linkman,a.phone,a.messages,a.monetary,a.ostatus,a.oremarks,b.price from record a,roomtype b where a.typeid=b.typeid order by orderid asc limit $startno,$pagesize";
+              $sql="select * from order_history_query order by orderid asc limit $startno,$pagesize";
               $rs=mysqli_query($db_link,$sql);
               if(!$rs)
               {

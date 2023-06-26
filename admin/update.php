@@ -17,7 +17,7 @@
   if(@$_GET["crid"])
   {
     //将订单信息移到record表,表设置的是自增，移入的时候和record的主键重复冲突，导致失败,所以订单流水设置为时间戳
-    $sql1 = "insert into record(orderid,roomid,cardid,entertime,days,typeid,linkman,phone,ostatus,oremarks,monetary,messages) select * from orders where orderid='".$_GET["orderid"]."'";
+    $sql1 = "insert into record(orderid,roomid,cardid,entertime,days,typeid,ostatus,oremarks,monetary,messages) select * from orders where orderid='".$_GET["orderid"]."'";
     mysqli_query($db_link,$sql1) or die ("将订单信息移到record表失败");
     
     //删除orders中相应的记录
