@@ -49,6 +49,12 @@
         <form action="insert.php" id="renpassword" method="post">
           <div class="result-content">
           <ul class="order">
+          <?php
+              if($_SESSION["aname"] <> "admin"){
+                echo "用户没有权限！";
+                exit;
+              }
+          ?>
             <li>
               <label for="name">用户名&emsp;</label>
               <input placeholder="请输入用户名" type="text" id='name' name='name' size="20" required>   

@@ -45,6 +45,12 @@
       </div>
       <div class="result-wrap">
         <form enctype="multipart/form-data" id="myform" name="myform" method="post" action="insert.php" >
+        <?php
+              if($_SESSION["aname"] <> "admin"){
+                echo "用户没有权限！";
+                exit;
+              }
+        ?>
         <ul class='order'>
           <li>
             <label for="roomid">房间编号&emsp;</label>
@@ -55,6 +61,10 @@
             <select id='selroom' name="typeid">
               <option  value=0 selected>请选择房间类型</option>
             <?php
+              if($_SESSION["aname"] <> "admin"){
+                echo "用户没有权限！";
+                exit;
+              }
               require("../dbconnect.php");
               $sql="select typeid,typename from roomtype";
               $arr=mysqli_query($db_link,$sql);

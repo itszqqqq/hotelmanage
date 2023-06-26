@@ -37,6 +37,12 @@
     <?php
     require("leftArea.html");
     ?>
+    <?php
+      if($_SESSION["aname"] <> "admin"){
+        echo "用户没有权限！";
+        exit;
+      }
+    ?>
     <!--/sidebar-->
     <div class="main-wrap">
       <div class="crumb-wrap">

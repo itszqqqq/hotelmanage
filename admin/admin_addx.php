@@ -34,6 +34,7 @@
       </div>
     </div>
   </div>
+
   <div class="container clearfix">
     <?php
     require("leftArea.html");
@@ -43,9 +44,16 @@
       <div class="crumb-wrap">
         <div class="crumb-list"><i class="icon-font"></i><a href="admin_index.php">后台管理</a><span class="crumb-step">&gt;</span><span class="crumb-name">新增相册</span></div>
       </div>
+
       <div class="result-wrap">
         <form enctype="multipart/form-data" id="myform" name="myform" method="post" action="insert.php" >
         <ul class="order">
+        <?php
+          if($_SESSION["aname"] <> "admin"){
+            echo "用户没有权限！";
+            exit;
+          }
+        ?>
           <li>
             <label for="title">相册标题&emsp;</label>
             <input required placeholder="相册标题" name="title" type="text" id="title" size="30" maxlength="50" />
