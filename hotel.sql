@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `name` varchar(10) collate utf8_bin NOT NULL COMMENT '管理员姓名',
   `passwd` varchar(20) collate utf8_bin NOT NULL COMMENT '密码',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='管理员表' AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='管理员表' AUTO_INCREMENT=5 ;
 
 --
 -- 转存表中的数据 `admin`
@@ -93,7 +93,7 @@ INSERT INTO `news` (`id`, `title`, `spic`, `bpic`, `describes`) VALUES
 CREATE TABLE IF NOT EXISTS `orders` (
   `orderid` int(15) NOT NULL COMMENT '订单流水号',
   `roomid` varchar(4) collate utf8_bin NOT NULL COMMENT '房间编号',
-  `cardid` varchar(25) collate utf8_bin NOT NULL COMMENT '客户身份证',
+  `cardid` char(18) collate utf8_bin NOT NULL COMMENT '客户身份证',
   `entertime` varchar(20) collate utf8_bin NOT NULL COMMENT '入住时间',
   `days` int(3) NOT NULL default '1' COMMENT '住宿天数',
   `typeid` int(4) NOT NULL COMMENT '房间类型',
@@ -208,15 +208,20 @@ INSERT INTO `roomtype` (`typeid`, `typename`, `area`, `hasNet`, `hasTV`, `price`
 --
 
 --
--- 限制表 `orders`
+-- 限制表 `orders`,orders的typeid参照roomtype的typeid
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `FK_ORDER` FOREIGN KEY (`typeid`) REFERENCES `roomtype` (`typeid`);
 
 --
--- 限制表 `room`
+-- 限制表 `room`,room的typeid参照roomtype的typeid
 --
 ALTER TABLE `room`
   ADD CONSTRAINT `FK_ID` FOREIGN KEY (`typeid`) REFERENCES `roomtype` (`typeid`);
 
+CREATE VIEW `order_roomtype` AS
+ SELECT a.orderid, a.roomid, a.entertime, a.days, a.monetary, b.typename, a.linkman, a.phone, a.messages, a.ostatus, a.oremarks 
+            FROM orders a, roomtype b WHERE a.typeid = b.typeid;
 
+CREATE VIEW `room_roomtype` AS
+  SELECT a.roomid,b.typeid,b.typename,b.price FROM room a,roomtype b WHERE a.typeid=b.typeid;

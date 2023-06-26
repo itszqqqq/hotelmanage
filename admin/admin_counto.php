@@ -45,7 +45,7 @@
       </div>
       <div class="result-wrap">
         <div class="result-content">
-        <table border="0" width="100%">
+        <table border="0px" width="100%">
           <tr height="40px">
             <th class="tc count">房间统计</th>
             <th class="tc count">营业统计</th>
@@ -75,7 +75,7 @@
             <td class="tc">
               <table class="result-tab" width="100%">
                 <tr>
-                  <th class="td_bg">订单总数（个）</th>
+                  <th class="td_bg">历史订单总数（个）</th>
                   <th class="td_bg">总营业额（元）</th>
                 </tr>
                 <?php 

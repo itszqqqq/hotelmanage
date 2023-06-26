@@ -51,7 +51,8 @@ require("head.html");
 <div id="booking-tab-contents" class="tab-content">
 <?php
       require("dbconnect.php");
-      $sql="select a.roomid,b.typeid,b.typename,b.price from room a,roomtype b where a.typeid=b.typeid and a.roomid='".$_GET["orid"]."'";
+    //   $sql="select a.roomid,b.typeid,b.typename,b.price from room a,roomtype b where a.typeid=b.typeid and a.roomid='".$_GET["orid"]."'";
+      $sql="select * from room_roomtype where room_roomtype.roomid='".$_GET["orid"]."'";
       $arr=mysqli_query($db_link,$sql);
       $rows=mysqli_fetch_row($arr);
  ?>

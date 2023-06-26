@@ -132,10 +132,7 @@
 					if (empty($searchType) || empty($keywords)) {
 						echo "无满足条件的记录，请继续查询！";
 					} else {
-						$sql = "SELECT a.orderid, a.roomid, a.entertime, a.days, a.monetary, b.typename, a.linkman, a.phone, a.messages, a.ostatus, a.oremarks 
-            FROM orders a, roomtype b 
-            WHERE a.typeid = b.typeid AND a.$searchType LIKE ('%$keywords%')";
-
+						$sql = "SELECT * FROM order_roomtype where order_roomtype.$searchType LIKE ('%$keywords%')"; 
 						$rs = mysqli_query($db_link, $sql);
 
 						if ($rs) {
