@@ -97,6 +97,8 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `entertime` varchar(20) collate utf8_bin NOT NULL COMMENT '入住时间',
   `days` int(3) NOT NULL default '1' COMMENT '住宿天数',
   `typeid` int(4) NOT NULL COMMENT '房间类型',
+  `linkman` varchar(10) collate utf8_bin NOT NULL COMMENT '客户姓名',
+  `phone` char(11) collate utf8_bin NOT NULL COMMENT '联系电话',
   `ostatus` char(1) collate utf8_bin NOT NULL default '否' COMMENT '是否网上预订',
   `oremarks` char(1) collate utf8_bin NOT NULL default '否' COMMENT '订单是否完成',
   `monetary` decimal(8,2) NOT NULL COMMENT '消费金额',
@@ -111,10 +113,11 @@ CREATE INDEX idcard_index ON orders(cardid);
 -- 转存表中的数据 `orders`
 --
 
-INSERT INTO `orders` (`orderid`, `roomid`, `cardid`, `entertime`, `days`, `typeid`, `ostatus`, `oremarks`, `monetary`, `messages`) VALUES
-(13351, '102', '430281188412150313', '2018-04-28', 1, 1001, '是', '是', '288.00', '22'),
-(13502, '103', '430281199412150312', '2018-04-27', 2, 1005,   '否', '是', '640.00', ''),
-(94036, '104', '430281199412150111', '2018-05-15', 2, 1003,  '否', '是', '540.00', '试试');
+INSERT INTO `orders` (`orderid`, `roomid`, `cardid`, `entertime`, `days`, `typeid`, `linkman`, `phone`, `ostatus`, `oremarks`, `monetary`, `messages`) VALUES
+(13351, '102', '430281188412150313', '2023-04-28', 1, 1001, '啊啊', '18473481958', '是', '是', '288.00', '22'),
+(13502, '103', '430281199412150312', '2023-04-27', 2, 1005, '哦哦', '18419581245', '否', '是', '640.00', ''),
+(94036, '104', '430281199412150111', '2023-05-15', 2, 1003, '森森', '18473481922', '否', '是', '540.00', '试试');
+
 
 CREATE TABLE IF NOT EXISTS `customer`(
   `cardid` char(18) collate utf8_bin NOT NULL COMMENT '客户身份证',
@@ -146,6 +149,8 @@ CREATE TABLE IF NOT EXISTS `record` (
   `entertime` varchar(20) collate utf8_bin NOT NULL COMMENT '入住时间',
   `days` int(3) NOT NULL default '1' COMMENT '住宿天数',
   `typeid` int(4) NOT NULL COMMENT '房间类型',
+  `linkman` varchar(10) collate utf8_bin NOT NULL COMMENT '客户姓名',
+  `phone` char(11) collate utf8_bin NOT NULL COMMENT '联系电话',
   `ostatus` char(1) collate utf8_bin NOT NULL default '否' COMMENT '是否网上预订',
   `oremarks` char(1) collate utf8_bin NOT NULL default '否' COMMENT '订单是否完成',
   `monetary` decimal(8,2) NOT NULL COMMENT '消费金额',
@@ -159,8 +164,9 @@ CREATE TABLE IF NOT EXISTS `record` (
 -- 转存表中的数据 `record`
 --
 
-INSERT INTO `record` (`orderid`, `roomid`, `cardid`, `entertime`, `days`, `typeid`,`ostatus`, `oremarks`, `monetary`, `messages`) VALUES
-(31214, '102', '430281199412150313', '2018-04-25', 2, 1001, '否', '是', '576.00', '森森');
+INSERT INTO `record` (`orderid`, `roomid`, `cardid`, `entertime`, `days`, `typeid`, `linkman`, `phone`, `ostatus`, `oremarks`, `monetary`, `messages`) VALUES
+(31214, '102', '430281199412150313', '2023-04-25', 2, 1001, '森森', '18473481922', '否', '是', '576.00', '森森');
+
 
 -- --------------------------------------------------------
 
@@ -285,3 +291,15 @@ CREATE VIEW `order_admin_query` AS
 SELECT a.orderid, a.roomid, a.cardid, a.entertime, a.days, b.typeid, b.typename, c.linkman, c.phone, a.messages, a.monetary, a.ostatus, a.oremarks, b.price 
             FROM orders a, roomtype b,customer c
             WHERE a.typeid = b.typeid AND c.cardid=a.cardid;
+ 
+					
+-- 触发器，可以在删除orders表中的一行数据时往record表中插入该行数据         
+DELIMITER $$
+CREATE TRIGGER orders_delete_trigger
+AFTER DELETE ON orders
+FOR EACH ROW
+BEGIN
+    INSERT INTO record (orderid, roomid, cardid, entertime, days, typeid, linkman, phone, ostatus, oremarks, monetary, messages)
+    VALUES (OLD.orderid, OLD.roomid, OLD.cardid, OLD.entertime, OLD.days, OLD.typeid, OLD.linkman, OLD.phone, OLD.ostatus, OLD.oremarks, OLD.monetary, OLD.messages);
+END$$
+DELIMITER;
