@@ -299,3 +299,8 @@ BEGIN
     INSERT INTO record (orderid, roomid, cardid, entertime, days, typeid, ostatus, oremarks, monetary, messages)
     VALUES (OLD.orderid, OLD.roomid, OLD.cardid, OLD.entertime, OLD.days, OLD.typeid, OLD.ostatus, OLD.oremarks, OLD.monetary, OLD.messages);
 END;
+
+-- 普通用户视图
+CREATE VIEW authorized_managers AS
+SELECT * FROM admin WHERE name <> 'admin';
+
