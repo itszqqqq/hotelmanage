@@ -82,7 +82,7 @@
               <th class="tc">网上预定</th>
               <th class="tc">完成交易</th>
               <th class="tc">消费金额</th>
-              <th class="tc">操&emsp;&emsp;作</th>
+              <!-- <th class="tc">操&emsp;&emsp;作</th> -->
             </tr>
             <?php
             require("../dbconnect.php");
@@ -123,9 +123,9 @@
                     <td class='tc'><?php echo $rows["ostatus"] ?></td>
                     <td class='tc'><?php echo $rows["oremarks"] ?></td>
                     <td class='tc'><?php echo $rows["monetary"] ?></td>
-                    <td class='tc'>
+                    <!-- <td class='tc'>
                       <a href='admin_querymod.php?orderid=<?php echo $rows["orderid"] ?>' class='link-update'>修改</a>
-                    </td>
+                    </td> -->
                   </tr>
             <?php
                 }

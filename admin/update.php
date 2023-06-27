@@ -46,19 +46,19 @@ if (@$_GET["crid"]) {
     echo "<script language=javascript>alert('退房清算成功');window.location='admin_checkout.php'</script>";
   }
 }
-//订单修改
-if (@$_POST["action"] == "dmod") {
-  //  . 
-  $sql = "update orders set orderid='".$_POST["orderid"]."',roomid='" . $_POST["roomid"] . "',entertime='" . $_POST["entertime"] . "',days='" . $_POST["days"] . "',messages='" . $_POST["content"] . "',monetary='" . $_POST["monetary"] ."' where orderid = '" . $_POST["orderid"] . "'";
-  $sql1 ="update customer set linkman='" . $_POST["linkman"] . "',phone='" . $_POST["phone"]."' where cardid = '" . $_POST["cardid"] . "'";
-  $sql = $sql.";".$sql1;
-  $arry = mysqli_query($db_link, $sql);
-  if ($arry) {
-    echo "<script> alert('订单信息修改成功');location='admin_queryo.php';</script>";
-  } else {
-    echo "<script>alert('订单信息修改失败');history.go(-1);</script>";
-  }
-}
+// //订单修改
+// if (@$_POST["action"] == "dmod") {
+//   //  . 
+//   $sql = "update orders set orderid='".$_POST["orderid"]."',roomid='" . $_POST["roomid"] . "',entertime='" . $_POST["entertime"] . "',days='" . $_POST["days"] . "',messages='" . $_POST["content"] . "',monetary='" . $_POST["monetary"] ."' where orderid = '" . $_POST["orderid"] . "'";
+//   $sql1 ="update customer set linkman='" . $_POST["linkman"] . "',phone='" . $_POST["phone"]."' where cardid = '" . $_POST["cardid"] . "'";
+//   $sql = $sql.";".$sql1;
+//   $arry = mysqli_query($db_link, $sql);
+//   if ($arry) {
+//     echo "<script> alert('订单信息修改成功');location='admin_queryo.php';</script>";
+//   } else {
+//     echo "<script>alert('订单信息修改失败');history.go(-1);</script>";
+//   }
+// }
 //房型管理修改
 if (@$_POST["action"] == "modify") {
   $sqlstr = "update roomtype set typename='" . $_POST["typename"] . "',area='" . $_POST["area"] . "',hasNet='" . $_POST["hasNet"] . "',hasTV='" . $_POST["hasTV"] . "',price='" . $_POST["price"] . "',totalnum='" . $_POST["totalnum"] . "',leftnum='" . $_POST["leftnum"] . "' where typeid = '" . $_GET["mtid"] . "'";
