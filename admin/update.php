@@ -16,25 +16,42 @@
   //退房释放资源
   if(@$_GET["crid"])
   {
-    //将订单信息移到record表,表设置的是自增，移入的时候和record的主键重复冲突，导致失败,所以订单流水设置为时间戳
-    $sql1 = "insert into record(orderid,roomid,cardid,entertime,days,typeid,ostatus,oremarks,monetary,messages) select * from orders where orderid='".$_GET["orderid"]."'";
-    mysqli_query($db_link,$sql1) or die ("将订单信息移到record表失败");
+    // //将订单信息移到record表,表设置的是自增，移入的时候和record的主键重复冲突，导致失败,所以订单流水设置为时间戳
+    // $sql1 = "insert into record(orderid,roomid,cardid,entertime,days,typeid,ostatus,oremarks,monetary,messages) select * from orders where orderid='".$_GET["orderid"]."'";
+    // mysqli_query($db_link,$sql1) or die ("将订单信息移到record表失败");
     
-    //删除orders中相应的记录
-    $sql2 = "delete from orders where orderid='".$_GET["orderid"]."'";
-    mysqli_query($db_link,$sql2) or die ("删除orders中相应的记录失败");
+    // //删除orders中相应的记录
+    // $sql2 = "delete from orders where orderid='".$_GET["orderid"]."'";
+    // mysqli_query($db_link,$sql2) or die ("删除orders中相应的记录失败");
     
-    //更新roomtype表中leftunm字段
-    $sql3 = "update roomtype set leftnum=leftnum+1 where typeid='".$_GET["typeid"]."'";
+    // //更新roomtype表中leftunm字段
+    // $sql3 = "update roomtype set leftnum=leftnum+1 where typeid='".$_GET["typeid"]."'";
 
-    mysqli_query($db_link,$sql3) or die ("更新roomtype表中leftunm字段失败");
+    // mysqli_query($db_link,$sql3) or die ("更新roomtype表中leftunm字段失败");
 
-    //更新room表中status字段
-    $sql4 = "update room set status='否' where roomid='".$_GET["crid"]."'";
+    // //更新room表中status字段
+    // $sql4 = "update room set status='否' where roomid='".$_GET["crid"]."'";
 
-    mysqli_query($db_link,$sql4) or die ("更新room表中status字段失败");
+    // mysqli_query($db_link,$sql4) or die ("更新room表中status字段失败");
   
-    echo "<script language=javascript>alert('退房清算成功');window.location='admin_checkout.php'</script>"; 
+    // echo "<script language=javascript>alert('退房清算成功');window.location='admin_checkout.php'</script>"; 
+      //退房释放资源
+    if (@$_GET["crid"]) {
+
+      //删除orders中相应的记录
+      $sql1 = "delete from orders where orderid='" . $_GET["orderid"] . "'";
+      mysqli_query($db_link, $sql1) or die("删除orders中相应的记录失败");
+
+      //更新roomtype表中leftunm字段
+      $sql2 = "update roomtype set leftnum=leftnum+1 where typeid='" . $_GET["typeid"] . "'";
+      mysqli_query($db_link, $sql2) or die("更新roomtype表中leftunm字段失败");
+
+      //更新room表中status字段
+      $sql3 = "update room set status='否' where roomid='" . $_GET["crid"] . "'";
+      mysqli_query($db_link, $sql3) or die("更新room表中status字段失败");
+
+      echo "<script language=javascript>alert('退房清算成功');window.location='admin_checkout.php'</script>";
+    }
   }
   //订单修改
   if(@$_POST["action"]=="dmod"){

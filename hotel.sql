@@ -292,12 +292,10 @@ SELECT a.orderid, a.roomid, a.cardid, a.entertime, a.days, b.typeid, b.typename,
  
 					
 -- 触发器，可以在删除orders表中的一行数据时往record表中插入该行数据         
--- DELIMITER $$
--- CREATE TRIGGER orders_delete_trigger
--- AFTER DELETE ON orders
--- FOR EACH ROW
--- BEGIN
---     INSERT INTO record (orderid, roomid, cardid, entertime, days, typeid, linkman, phone, ostatus, oremarks, monetary, messages)
---     VALUES (OLD.orderid, OLD.roomid, OLD.cardid, OLD.entertime, OLD.days, OLD.typeid, OLD.linkman, OLD.phone, OLD.ostatus, OLD.oremarks, OLD.monetary, OLD.messages);
--- END$$
--- DELIMITER;
+CREATE TRIGGER orders_delete_trigger
+AFTER DELETE ON orders
+FOR EACH ROW
+BEGIN
+    INSERT INTO record (orderid, roomid, cardid, entertime, days, typeid, ostatus, oremarks, monetary, messages)
+    VALUES (OLD.orderid, OLD.roomid, OLD.cardid, OLD.entertime, OLD.days, OLD.typeid, OLD.ostatus, OLD.oremarks, OLD.monetary, OLD.messages);
+END;
