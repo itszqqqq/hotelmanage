@@ -162,11 +162,11 @@
                 </tr>
 
               </table>
-              <!-- <a href='update.php?crid=<?php echo $rows["roomid"] ?>&typeid=<?php echo $rows["typeid"] ?>&orderid=<?php echo $rows["orderid"] ?>'  class='link-update tf'>确认退房</a> -->
+              <a href='update.php?crid=<?php echo $rows["roomid"] ?>&typeid=<?php echo $rows["typeid"] ?>&orderid=<?php echo $rows["orderid"] ?>'  class='link-update tf'>确认退房</a>
 
-              <!-- 触发器，删除orders表中的一行数据时，往record表中插入该行数据-->
+              <!-- 触发器，删除orders表中的一行数据时，往record表中插入该行数据
               <a href='delete.php?crid=<?php echo $rows["roomid"] ?>&typeid=<?php echo $rows["typeid"] ?>&orderid=<?php echo $rows["orderid"] ?>'
-                class='link-update tf'>确认退房</a>
+                class='link-update tf'>确认退房</a> -->
             <?php } ?>
           <?php } ?>
         </div>
