@@ -70,7 +70,7 @@
             </tr>
             <?php
             require("../dbconnect.php");
-            $sql = "select * from orders where  oremarks='是' and roomid = '" . @$_POST["roomid"] . "'";
+            $sql = "select * from order_admin_query where  oremarks='是' and roomid = '" . @$_POST["roomid"] . "'";
             $rs = mysqli_query($db_link, $sql);
             if ($rs) {
               $s = mysqli_num_rows($rs);
