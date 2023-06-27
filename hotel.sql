@@ -17,7 +17,7 @@ USE `hotel`;
 CREATE TABLE IF NOT EXISTS `admin` (
   `id` int(4) NOT NULL auto_increment COMMENT '管理员号',
   `name` varchar(10) collate utf8_bin NOT NULL COMMENT '管理员姓名',
-  `passwd` varchar(20) collate utf8_bin NOT NULL COMMENT '密码',
+  `passwd` varchar(512) collate utf8_bin NOT NULL COMMENT '密码',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='管理员表' AUTO_INCREMENT=5 ;
 
@@ -26,10 +26,10 @@ CREATE TABLE IF NOT EXISTS `admin` (
 --
 
 INSERT INTO `admin` (`id`, `name`, `passwd`) VALUES
-(1, 'admin', '123456'),
-(2, 'zq', '123456'),
-(3, 'yz', '123456'),
-(4, 'lym', '123456');
+(1, 'admin', "483a2983e5106f0b7d1bcdec9c28851fadc98a5246920854aae5c3bbd8d92000"),
+(2, 'zq', "483a2983e5106f0b7d1bcdec9c28851fadc98a5246920854aae5c3bbd8d92000"),
+(3, 'yz', "483a2983e5106f0b7d1bcdec9c28851fadc98a5246920854aae5c3bbd8d92000"),
+(4, 'lym', "483a2983e5106f0b7d1bcdec9c28851fadc98a5246920854aae5c3bbd8d92000");
 
 -- --------------------------------------------------------
 
