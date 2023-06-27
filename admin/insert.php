@@ -102,9 +102,20 @@ if ($_POST["action"] == "insertx") {
     }
   }
 }
+
+
 //新增用户
 if ($_POST["action"] == "insetr") {
-  $sql = "insert into admin (name,passwd) values('" . $_POST["name"] . "','" . $_POST["password"] . "')";
+  function encryptWithSalt($string, $salt)
+  {
+    $saltedString = $string . $salt;
+    $encrypted = hash('sha256', $saltedString);
+    return $encrypted;
+  }
+  $salt = "cadslkvhrovihobnldlvjnrobntlnbmlnjdwrobno"; // 自定义的盐值
+  $hashedPass = encryptWithSalt($_POST["password"], $salt); // 使用盐值对密码进行加密
+
+  $sql = "insert into admin (name,passwd) values('" . $_POST["name"] . "','$hashedPass')";
   $arr = mysqli_query($db_link, $sql);
   if ($arr) {
     echo "<script language=javascript>alert('新增用户成功！');window.location='admin_addr.php'</script>";
@@ -113,14 +124,4 @@ if ($_POST["action"] == "insetr") {
   }
 }
 
-// //新增服务员
-// if ($_POST["action"] == "inserts") {
-//   $sql = "insert into server (servername,roomid) values('" . $_POST["name"] . "','" . $_POST["roomid"] . "')";
-//   $arr = mysqli_query($db_link, $sql);
-//   if ($arr) {
-//     echo "<script language=javascript>alert('新增服务员成功！');window.location='admin_adds.php'</script>";
-//   } else {
-//     echo "<script>alert('新增服务员失败');history.go(-1);</script>";
-//   }
-// }
 ?>
