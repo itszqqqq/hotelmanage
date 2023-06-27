@@ -40,7 +40,7 @@
     <!--/sidebar-->
     <?php
       require("../dbconnect.php");
-      $sql="select a.orderid,a.roomid,a.cardid,a.entertime,a.days,b.typename,a.linkman,a.phone,a.ostatus,a.oremarks,a.messages,b.typeid,a.monetary from orders a,roomtype b where a.typeid=b.typeid and a.orderid='".$_GET["orderid"]."'";
+      $sql="select a.orderid,a.roomid,a.cardid,a.entertime,a.days,b.typename,c.linkman,c.phone,a.ostatus,a.oremarks,a.messages,b.typeid,a.monetary from orders a,roomtype b,customer c where a.typeid=b.typeid and c.cardid=a.cardid and a.orderid='".$_GET["orderid"]."'";
       $arr=mysqli_query($db_link,$sql);
       $rows=mysqli_fetch_row($arr);
     ?>
@@ -53,7 +53,7 @@
         <ul class='order'>
           <li>
             <label for="orderid">订单流水&emsp;</label>
-            <input name="orderid" type="text" required   id="orderid" value="<?php echo $rows[0] ?>" size="15" maxlength="20" />
+            <input disabled name="orderid" type="text" required   id="orderid" value="<?php echo $rows[0] ?>" size="15" maxlength="20" />
           </li>
           <li>
             <label for="roomid">房间编号&emsp;</label>
@@ -77,7 +77,7 @@
           </li>
           <li>
             <label for="cardid">证件号码&emsp;</label>
-            <input  name="cardid" required type="text" id="cardid"  value="<?php echo $rows[2] ?>" size="30" maxlength="30" />
+            <input disabled name="cardid" required type="text" id="cardid"  value="<?php echo $rows[2] ?>" size="30" maxlength="30" />
           </li>
           <li>
             <label for="entertime">入住时间&emsp;</label>

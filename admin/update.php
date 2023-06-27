@@ -48,7 +48,10 @@ if (@$_GET["crid"]) {
 }
 //订单修改
 if (@$_POST["action"] == "dmod") {
-  $sql = "update orders set orderid='" . $_POST["orderid"] . "',roomid='" . $_POST["roomid"] . "',cardid='" . $_POST["cardid"] . "',entertime='" . $_POST["entertime"] . "',days='" . $_POST["days"] . "',linkman='" . $_POST["linkman"] . "',messages='" . $_POST["content"] . "',monetary='" . $_POST["monetary"] . "',phone='" . $_POST["phone"] . "' where orderid = '" . $_POST["orderid"] . "'";
+  //  . 
+  $sql = "update orders set orderid='".$_POST["orderid"]."',roomid='" . $_POST["roomid"] . "',entertime='" . $_POST["entertime"] . "',days='" . $_POST["days"] . "',messages='" . $_POST["content"] . "',monetary='" . $_POST["monetary"] ."' where orderid = '" . $_POST["orderid"] . "'";
+  $sql1 ="update customer set linkman='" . $_POST["linkman"] . "',phone='" . $_POST["phone"]."' where cardid = '" . $_POST["cardid"] . "'";
+  $sql = $sql.";".$sql1;
   $arry = mysqli_query($db_link, $sql);
   if ($arry) {
     echo "<script> alert('订单信息修改成功');location='admin_queryo.php';</script>";
