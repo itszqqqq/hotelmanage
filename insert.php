@@ -1,7 +1,7 @@
 <?php
 require("dbconnect.php");
 //下订单
-    if ($_POST["action"] == "insert") {
+if ($_POST["action"] == "insert") {
     // 首先检查卡号是否存在
     $card = $_POST["card"];
     $query = "SELECT COUNT(*) AS count FROM customer WHERE cardid = '$card'";

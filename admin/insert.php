@@ -3,19 +3,29 @@
   //大堂入住
   if($_POST["action"]=="inserto")
   {  
-    //在order表中插入一条记录
-    $money = $_POST["days"] * $_POST["price"];
-    $sql2 = "insert into orders (orderid,roomid,cardid,entertime,days,typeid,linkman,phone,ostatus,oremarks,monetary,messages) values('".date('his')."','".$_POST["roomid"]."','".$_POST["card"]."','".$_POST["checkin"]."','".$_POST["days"]."','".$_POST["typeid"]."','".$_POST["name"]."','".$_POST["phone"]."','否','是','".$money."','".$_POST["content"]."')";
-    mysqli_query($db_link,$sql2) or die ("在orders表中插入记录失败");
-
-
+      // 首先检查卡号是否存在
+      $card = $_POST["card"];
+      $query = "SELECT COUNT(*) AS count FROM customer WHERE cardid = '$card'";
+      $result = mysqli_query($db_link, $query) or die("查询失败");
+      $row = mysqli_fetch_assoc($result);
+  
+      if ($row['count'] == 0) {
+          // 卡号不存在，执行插入操作
+          $name = $_POST["name"];
+          $phone = $_POST["phone"];
+  
+          $sql = "INSERT INTO customer (cardid, linkman, phone) VALUES ('$card', '$name', '$phone')";
+          mysqli_query($db_link, $sql) or die("在customer表中插入记录失败");
+      }
+  
+    //在orders表中插入一条记录
+    $money = (int)$_POST["days"] * (int)$_POST["price"];
+    $sql = "insert into orders (orderid,roomid,cardid,entertime,days,typeid,ostatus,oremarks,monetary,messages) values('" . date('his') . "','" . $_POST["roomid"] . "','" . $_POST["card"] . "','" . $_POST["checkin"] . "','" . $_POST["days"] . "','" . $_POST["typeid"] . "','否','否','" . $money . "','" . $_POST["content"] . "')";
+    mysqli_query($db_link, $sql) or die("在orders表中插入记录失败");
+  
     //更新roomtype表中leftunm字段
-    $sql3 = "update roomtype set leftnum=leftnum-1 where typeid='".$_POST["typeid"]."'";
-    mysqli_query($db_link,$sql3) or die ("更新roomtype表中leftunm字段失败");
-
-    //更新room表中status字段
-    $sql4 = "update room set status='是' where roomid='".$_POST["roomid"]."'";
-    mysqli_query($db_link,$sql4) or die ("更新room表中status字段失败");
+    $sql2 = "update roomtype set leftnum=leftnum-1 where typeid='" . $_POST["typeid"] . "'";
+    mysqli_query($db_link, $sql2) or die("更新roomtype表中leftunm字段失败");
   
     echo "<script language=javascript>alert('大堂入住成功');window.location='admin_addn.php'</script>";
   } 

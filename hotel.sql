@@ -227,18 +227,18 @@ INSERT INTO `roomtype` (`typeid`, `typename`, `area`, `hasNet`, `hasTV`, `price`
 (1006, '公寓大床房【双人】', '80', '有', '有', '350.00', 2, 2);
 
 
--- 服务员表
-CREATE TABLE IF NOT EXISTS `server`(
-  `serverid` int(4) NOT NULL auto_increment COMMENT '服务员id',
-  `servername` varchar(4) NOT NULL collate utf8_bin COMMENT '服务员姓名',
-  `roomid` varchar(4) collate utf8_bin NOT NULL COMMENT '房间编号',
-  PRIMARY KEY  (`serverid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1003;
+-- -- 服务员表
+-- CREATE TABLE IF NOT EXISTS `server`(
+--   `serverid` int(4) NOT NULL auto_increment COMMENT '服务员id',
+--   `servername` varchar(4) NOT NULL collate utf8_bin COMMENT '服务员姓名',
+--   `roomid` varchar(4) collate utf8_bin NOT NULL COMMENT '房间编号',
+--   PRIMARY KEY  (`serverid`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1003;
 
-INSERT INTO `server` (`serverid`,`servername`,`roomid`) VALUES
-(1000,'小李','101'),
-(1001,'小郑','102'),
-(1002,'诸葛亮','103');
+-- INSERT INTO `server` (`serverid`,`servername`,`roomid`) VALUES
+-- (1000,'小李','101'),
+-- (1001,'小郑','102'),
+-- (1002,'诸葛亮','103');
 
 --
 -- 限制导出的表
@@ -259,8 +259,8 @@ ALTER TABLE `orders`
 ALTER TABLE `room`
   ADD CONSTRAINT `FK_ROOM_TYPE` FOREIGN KEY (`typeid`) REFERENCES `roomtype` (`typeid`);
 
-ALTER TABLE `server`
-  ADD CONSTRAINT `FK_SERVER_ROOM` FOREIGN KEY (`roomid`) REFERENCES `room` (`roomid`);
+-- ALTER TABLE `server`
+--   ADD CONSTRAINT `FK_SERVER_ROOM` FOREIGN KEY (`roomid`) REFERENCES `room` (`roomid`);
 
   
 ALTER TABLE `record`
