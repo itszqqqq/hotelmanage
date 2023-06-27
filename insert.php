@@ -1,10 +1,21 @@
 <?php
 require("dbconnect.php");
 //下订单
-if ($_POST["action"] == "insert") {
-  //在customer中插入一条记录
-  $sql3 = "insert into customer (cardid,linkman,phone) values ('" . $_POST["card"] . "','" . $_POST["name"] . "','" . $_POST["phone"] . "')";
-  mysqli_query($db_link, $sql3) or die("在customer表中插入记录失败");
+    if ($_POST["action"] == "insert") {
+    // 首先检查卡号是否存在
+    $card = $_POST["card"];
+    $query = "SELECT COUNT(*) AS count FROM customer WHERE cardid = '$card'";
+    $result = mysqli_query($db_link, $query) or die("查询失败");
+    $row = mysqli_fetch_assoc($result);
+
+    if ($row['count'] == 0) {
+        // 卡号不存在，执行插入操作
+        $name = $_POST["name"];
+        $phone = $_POST["phone"];
+
+        $sql = "INSERT INTO customer (cardid, linkman, phone) VALUES ('$card', '$name', '$phone')";
+        mysqli_query($db_link, $sql) or die("在customer表中插入记录失败");
+    }
 
   //在orders表中插入一条记录
   $money = (int)$_POST["days"] * (int)$_POST["price"];
