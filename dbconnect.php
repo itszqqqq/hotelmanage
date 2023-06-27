@@ -15,6 +15,5 @@ if (!$db_link) {
 
 //设置数据库编码
 mysqli_query($db_link, "SET NAMES 'utf8'");
-//mysqli是php5提供的新函数库，i表示改进（improve），其执行速度要比mysql_query更快。
 
 ?>

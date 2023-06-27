@@ -22,14 +22,14 @@
                 <ul class="top-info-list clearfix">
                     <li><i class="icon-font">&#xe607;</i> 登录用户：
                         <?php
-            session_start();
-            if ($_SESSION["aname"]) {
-              echo $_SESSION["aname"];
-            } else {
-              header("location:index.php");
-              exit;
-            }
-            ?>
+                        session_start();
+                        if ($_SESSION["aname"]) {
+                            echo $_SESSION["aname"];
+                        } else {
+                            header("location:index.php");
+                            exit;
+                        }
+                        ?>
                     </li>
                     <li><a href="admin_logout.php"><i class="icon-font">&#xe638;</i> 退出</a></li>
                 </ul>
@@ -38,8 +38,8 @@
     </div>
     <div class="container clearfix">
         <?php
-    require("leftArea.html");
-    ?>
+        require("leftArea.html");
+        ?>
         <!--/sidebar-->
         <div class="main-wrap">
             <div class="crumb-wrap">
@@ -49,17 +49,17 @@
             <div class="result-wrap">
                 <form enctype="multipart/form-data" id="myform" name="myform" method="post" action="insert.php">
                     <?php
-             require("../dbconnect.php");
-             $sql1 = "select * from authorized_managers where name = '" . $_SESSION["aname"] . "'";
-             $rs1 = mysqli_query($db_link, $sql1);
-             if (mysqli_num_rows($rs1) > 0) {
-               // 当前用户名为"admin"
-               echo "当前用户没有新增房间的权限！";
-               exit;
-             } else {
-               // 当前用户名不是"admin"
-             }
-          ?>
+                    require("../dbconnect.php");
+                    $sql1 = "select * from authorized_managers where name = '" . $_SESSION["aname"] . "'";
+                    $rs1 = mysqli_query($db_link, $sql1);
+                    if (mysqli_num_rows($rs1) > 0) {
+                        // 当前用户名为"admin"
+                        echo "当前用户没有新增房间的权限！";
+                        exit;
+                    } else {
+                        // 当前用户名不是"admin"
+                    }
+                    ?>
                     <ul class='order'>
                         <li>
                             <label for="roomid">房间编号&emsp;</label>
@@ -71,21 +71,21 @@
                             <select id='selroom' name="typeid">
                                 <option value=0 selected>请选择房间类型</option>
                                 <?php
-                if ($_SESSION["aname"] <> "admin") {
-                  echo "用户没有权限！";
-                  exit;
-                }
-                require("../dbconnect.php");
-                $sql = "select typeid,typename from roomtype";
-                $arr = mysqli_query($db_link, $sql);
-                if (!$arr) {
-                  echo "<option  value=0>无房间类型</option>";
-                  exit;
-                }
-                while ($rows = mysqli_fetch_assoc($arr)) {
-                  echo "<option  value=" . $rows["typeid"] . ">" . $rows["typename"] . "</option>";
-                }
-                ?>
+                                // if ($_SESSION["aname"] <> "admin") {
+                                //     echo "用户没有权限！";
+                                //     exit;
+                                // }
+                                require("../dbconnect.php");
+                                $sql = "select typeid,typename from roomtype";
+                                $arr = mysqli_query($db_link, $sql);
+                                if (!$arr) {
+                                    echo "<option  value=0>无房间类型</option>";
+                                    exit;
+                                }
+                                while ($rows = mysqli_fetch_assoc($arr)) {
+                                    echo "<option  value=" . $rows["typeid"] . ">" . $rows["typename"] . "</option>";
+                                }
+                                ?>
                             </select>
                         </li>
                         <li>
