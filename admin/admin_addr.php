@@ -22,14 +22,14 @@
                 <ul class="top-info-list clearfix">
                     <li><i class="icon-font">&#xe607;</i> 登录用户：
                         <?php
-            session_start();
-            if ($_SESSION["aname"]) {
-              echo $_SESSION["aname"];
-            } else {
-              header("location:index.php");
-              exit;
-            }
-            ?>
+                        session_start();
+                        if ($_SESSION["aname"]) {
+                            echo $_SESSION["aname"];
+                        } else {
+                            header("location:index.php");
+                            exit;
+                        }
+                        ?>
                     </li>
                     <li><a href="admin_logout.php"><i class="icon-font">&#xe638;</i> 退出</a></li>
                 </ul>
@@ -38,8 +38,8 @@
     </div>
     <div class="container clearfix">
         <?php
-    require("leftArea.html");
-    ?>
+        require("leftArea.html");
+        ?>
         <!--/sidebar-->
         <div class="main-wrap">
             <div class="crumb-wrap">
@@ -52,17 +52,17 @@
                     <div class="result-content">
                         <ul class="order">
                             <?php
-              require("../dbconnect.php");
-              $sql1 = "select * from authorized_managers where name = '" . $_SESSION["aname"] . "'";
-              $rs1 = mysqli_query($db_link, $sql1);
-              if (mysqli_num_rows($rs1) > 0) {
-                // 当前用户名为"admin"
-                echo "当前用户没有添加工作人员的权限！";
-                exit;
-              } else {
-                // 当前用户名不是"admin"
-              }
-              ?>
+                            require("../dbconnect.php");
+                            $sql1 = "select * from authorized_managers where name = '" . $_SESSION["aname"] . "'";
+                            $rs1 = mysqli_query($db_link, $sql1);
+                            if (mysqli_num_rows($rs1) > 0) {
+                                // 当前用户名为"admin"
+                                echo "当前用户没有添加工作人员的权限！";
+                                exit;
+                            } else {
+                                // 当前用户名不是"admin"
+                            }
+                            ?>
                             <li>
                                 <label for="name">用户名&emsp;</label>
                                 <input placeholder="请输入用户名" type="text" id='name' name='name' size="20" required>
@@ -90,25 +90,25 @@
                             <th class="tc">操&emsp;&emsp;作</th>
                         </tr>
                         <?php
-            require("../dbconnect.php");
-            $pagesize = 10;
-            $sql = "select * from admin";
-            $rs = mysqli_query($db_link, $sql);
-            $recordcount = mysqli_num_rows($rs);
-            $pagecount = ($recordcount - 1) / $pagesize + 1;
-            $pagecount = (int) $pagecount;
-            $pageno = @$_GET["pageno"];
-            if ($pageno == "") {
-              $pageno = 1;
-            }
-            if ($pageno > $pagecount) {
-              $pageno = $pagecount;
-            }
-            $startno = ($pageno - 1) * $pagesize;
-            $sql = "select * from admin order by id asc limit $startno,$pagesize";
-            $rs = mysqli_query($db_link, $sql);
-            while ($rows = mysqli_fetch_assoc($rs)) {
-              ?>
+                        require("../dbconnect.php");
+                        $pagesize = 10;
+                        $sql = "select * from admin";
+                        $rs = mysqli_query($db_link, $sql);
+                        $recordcount = mysqli_num_rows($rs);
+                        $pagecount = ($recordcount - 1) / $pagesize + 1;
+                        $pagecount = (int) $pagecount;
+                        $pageno = @$_GET["pageno"];
+                        if ($pageno == "") {
+                            $pageno = 1;
+                        }
+                        if ($pageno > $pagecount) {
+                            $pageno = $pagecount;
+                        }
+                        $startno = ($pageno - 1) * $pagesize;
+                        $sql = "select * from admin order by id asc limit $startno,$pagesize";
+                        $rs = mysqli_query($db_link, $sql);
+                        while ($rows = mysqli_fetch_assoc($rs)) {
+                            ?>
                         <tr>
                             <td class='tc'>
                                 <?php echo $rows["id"] ?>
@@ -117,10 +117,14 @@
                                 <?php echo $rows["name"] ?>
                             </td>
                             <td class='tc'>
-                                <?php echo $rows["passwd"] ?>
+                                <?php echo str_repeat("*", strlen($rows["passwd"])); ?>
                             </td>
                             <td class='tc'>
-                                <a href='delete.php?id=<?php echo $rows["id"] ?>' class='link-update'>删除</a>
+                                <?php
+                                    if ($rows["name"] != "admin") {
+                                        echo "<a href='delete.php?id=" . $rows["id"] . "' class='link-update'>删除</a>";
+                                    }
+                                    ?>
                             </td>
 
                         </tr>
@@ -129,21 +133,21 @@
                     </table>
                     <div class="list-page">
                         <?php
-            if ($pageno == 1) {
-              if ($recordcount > $pagesize) {
-                echo "首页 | 上一页 | <a href='?pageno=" . ($pageno + 1) . "'>下一页</a> | <a href='?pageno=" . $pagecount . "'>末页</a>";
-              } else {
-                echo "首页 | 上一页 | 下一页 | 末页";
-              }
+                        if ($pageno == 1) {
+                            if ($recordcount > $pagesize) {
+                                echo "首页 | 上一页 | <a href='?pageno=" . ($pageno + 1) . "'>下一页</a> | <a href='?pageno=" . $pagecount . "'>末页</a>";
+                            } else {
+                                echo "首页 | 上一页 | 下一页 | 末页";
+                            }
 
-            } else if ($pageno == $pagecount) {
-              echo "<a href='?pageno=1'>首页</a> | <a href='?pageno=" . ($pageno - 1) . "'>上一页</a> | 下一页 | 末页";
-            } else {
-              echo "<a href='?pageno=1'>首页</a> | <a href='?pageno=" . ($pageno - 1) . "'>上一页</a> | <a href='?pageno=" . ($pageno + 1) . "'>下一页</a> | <a href='?pageno=" . $pagecount . "'>末页</a>";
-            }
+                        } else if ($pageno == $pagecount) {
+                            echo "<a href='?pageno=1'>首页</a> | <a href='?pageno=" . ($pageno - 1) . "'>上一页</a> | 下一页 | 末页";
+                        } else {
+                            echo "<a href='?pageno=1'>首页</a> | <a href='?pageno=" . ($pageno - 1) . "'>上一页</a> | <a href='?pageno=" . ($pageno + 1) . "'>下一页</a> | <a href='?pageno=" . $pagecount . "'>末页</a>";
+                        }
 
-            echo "&nbsp;&nbsp;页次：" . $pageno . "/" . $pagecount . "页&nbsp;共有" . $recordcount . "条信息";
-            ?>
+                        echo "&nbsp;&nbsp;页次：" . $pageno . "/" . $pagecount . "页&nbsp;共有" . $recordcount . "条信息";
+                        ?>
                     </div>
                 </div>
             </div>

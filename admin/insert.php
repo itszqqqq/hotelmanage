@@ -1,25 +1,24 @@
 ﻿<?php
 require("../dbconnect.php");
 //大堂入住
-if($_POST["action"]=="inserto")
-{  
-    // 首先检查卡号是否存在
-    $card = $_POST["card"];
-    $query = "SELECT COUNT(*) AS count FROM customer WHERE cardid = '$card'";
-    $result = mysqli_query($db_link, $query) or die("查询失败");
-    $row = mysqli_fetch_assoc($result);
+if ($_POST["action"] == "inserto") {
+  // 首先检查卡号是否存在
+  $card = $_POST["card"];
+  $query = "SELECT COUNT(*) AS count FROM customer WHERE cardid = '$card'";
+  $result = mysqli_query($db_link, $query) or die("查询失败");
+  $row = mysqli_fetch_assoc($result);
 
-    if ($row['count'] == 0) {
-        // 卡号不存在，执行插入操作
-        $name = $_POST["name"];
-        $phone = $_POST["phone"];
+  if ($row['count'] == 0) {
+    // 卡号不存在，执行插入操作
+    $name = $_POST["name"];
+    $phone = $_POST["phone"];
 
-        $sql = "INSERT INTO customer (cardid, linkman, phone) VALUES ('$card', '$name', '$phone')";
-        mysqli_query($db_link, $sql) or die("在customer表中插入记录失败");
-    }
+    $sql = "INSERT INTO customer (cardid, linkman, phone) VALUES ('$card', '$name', '$phone')";
+    mysqli_query($db_link, $sql) or die("在customer表中插入记录失败");
+  }
 
   //在orders表中插入一条记录
-  $money = (int)$_POST["days"] * (int)$_POST["price"];
+  $money = (int) $_POST["days"] * (int) $_POST["price"];
   $sql = "insert into orders (orderid,roomid,cardid,entertime,days,typeid,ostatus,oremarks,monetary,messages) values('" . date('his') . "','" . $_POST["roomid"] . "','" . $_POST["card"] . "','" . $_POST["checkin"] . "','" . $_POST["days"] . "','" . $_POST["typeid"] . "','否','否','" . $money . "','" . $_POST["content"] . "')";
   mysqli_query($db_link, $sql) or die("在orders表中插入记录失败");
 
@@ -28,7 +27,8 @@ if($_POST["action"]=="inserto")
   mysqli_query($db_link, $sql2) or die("更新roomtype表中leftunm字段失败");
 
   echo "<script language=javascript>alert('大堂入住成功');window.location='admin_addn.php'</script>";
-} 
+}
+
 //新增房型
 if ($_POST["action"] == "insertt") {
   $sql = "insert into roomtype (typename,area,hasNet,hasTV,price,totalnum,leftnum) values('" . $_POST["typename"] . "','" . $_POST["area"] . "','" . $_POST["hasNet"] . "','" . $_POST["hasTV"] . "','" . $_POST["price"] . "','" . $_POST["totalnum"] . "','" . $_POST["totalnum"] . "')";
@@ -112,17 +112,15 @@ if ($_POST["action"] == "insetr") {
     echo "<script>alert('新增用户失败');history.go(-1);</script>";
   }
 }
-//新增服务员
-if ($_POST["action"] == "inserts") {
-  $sql = "insert into server (servername,roomid) values('" . $_POST["name"] . "','" . $_POST["roomid"] . "')";
-  $arr = mysqli_query($db_link, $sql);
-  if ($arr) {
-    echo "<script language=javascript>alert('新增服务员成功！');window.location='admin_adds.php'</script>";
-  } else {
-    echo "<script>alert('新增服务员失败');history.go(-1);</script>";
-  }
-}
 
-
-
+// //新增服务员
+// if ($_POST["action"] == "inserts") {
+//   $sql = "insert into server (servername,roomid) values('" . $_POST["name"] . "','" . $_POST["roomid"] . "')";
+//   $arr = mysqli_query($db_link, $sql);
+//   if ($arr) {
+//     echo "<script language=javascript>alert('新增服务员成功！');window.location='admin_adds.php'</script>";
+//   } else {
+//     echo "<script>alert('新增服务员失败');history.go(-1);</script>";
+//   }
+// }
 ?>
