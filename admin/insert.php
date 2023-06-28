@@ -62,17 +62,27 @@ if ($_POST["action"] == "inserth") {
       exit;
     }
 
-    $sql = "insert into room (roomid,typeid,status,pic,remarks) values('" . $_POST["roomid"] . "','" . $_POST["typeid"] . "','" . $_POST["status"] . "','" . $newPath . "','" . @$_POST["remarks"] . "')";
+    // 检查房间ID是否超过四位数
+    $roomid = $_POST["roomid"];
+    if (strlen($roomid) > 4) {
+      echo "<script>alert('房间ID超过四位数，请截取前四位！');history.go(-1);</script>";
+      exit;
+    }
+
+    // 执行插入操作
+    $sql = "INSERT INTO room (roomid, typeid, status, pic, remarks) VALUES ('" . $roomid . "', '" . $_POST["typeid"] . "', '" . $_POST["status"] . "', '" . $newPath . "', '" . @$_POST["remarks"] . "')";
     $arr = mysqli_query($db_link, $sql);
+
     if ($arr) {
-      //更新roomtype表中totalnum字段
-      $sql2 = "update roomtype set totalnum=totalnum+1 where typeid='" . $_POST["typeid"] . "'";
+      // 更新roomtype表中totalnum字段
+      $sql2 = "UPDATE roomtype SET totalnum = totalnum + 1 WHERE typeid='" . $_POST["typeid"] . "'";
       mysqli_query($db_link, $sql2) or die("更新roomtype表中totalnum字段失败");
-      //更新roomtype表中leftnum字段
-      $sql3 = "update roomtype set leftnum=leftnum+1 where typeid='" . $_POST["typeid"] . "'";
+
+      // 更新roomtype表中leftnum字段
+      $sql3 = "UPDATE roomtype SET leftnum = leftnum + 1 WHERE typeid='" . $_POST["typeid"] . "'";
       mysqli_query($db_link, $sql3) or die("更新roomtype表中leftnum字段失败");
 
-      echo "<script language=javascript>alert('新增房间成功！');window.location='admin_addh.php'</script>";
+      echo "<script>alert('新增房间成功！');window.location='admin_addh.php'</script>";
     } else {
       echo "<script>alert('新增房间失败');history.go(-1);</script>";
     }
@@ -123,5 +133,3 @@ if ($_POST["action"] == "insetr") {
     echo "<script>alert('新增用户失败');history.go(-1);</script>";
   }
 }
-
-?>
